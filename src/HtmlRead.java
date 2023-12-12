@@ -26,7 +26,6 @@ public class HtmlRead implements ActionListener {
     }
 
 
-
     public HtmlRead() {
         prepareGUI();
 
@@ -38,25 +37,48 @@ public class HtmlRead implements ActionListener {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(url.openStream())
             );
-            String line;
-            while ( (line = reader.readLine()) != null ) {
-                if(line.contains("href=")) {
-                    int href = (line.indexOf("href="));
-                    String short1 =line.substring(href + 6);
-                    System.out.println(short1);
-                    int milton = (short1.indexOf("\""));
-                    String short2 =short1.substring( 0, milton);
-                    System.out.println(short2);
+            String line ;
+
+//
+                while ((line = reader.readLine()) != null) {
+                    if (line.contains("href=")) {
+                        if (line.contains("athletics")) {
+                            int athletics = (line.indexOf("athletics"));
+                        int href = (line.indexOf("href="));
+                        String short1 = line.substring(href + 6);
+                        // System.out.println(short1);
+                        int milton = (short1.indexOf("\""));
+                        //String short2 =short1.substring( 0, milton);
+                        // System.out.println(short2);
+                        int cate = short1.indexOf("\'");
+                        //String short3 =short3.substring( 0, milton);
+
+
+                        if (milton < 0) {
+                            System.out.println(short1.substring(0, cate));
+                        } else if (cate < 0) {
+                            System.out.println(short1.substring(0, milton));
+
+                        } else if (cate < milton) {
+                            System.out.println(short1.substring(0, cate));
+                        } else {
+                            System.out.println(short1.substring(0, milton));
+                        }
+
+
+                    }
+
                 }
+                reader.close();
 
             }
-            reader.close();
-        } catch(Exception ex) {
-            System.out.println(ex);
-        }
+        }catch(Exception ex){
+        System.out.println(ex);
+    }
     }
 
-        private void prepareGUI() {
+
+        private void prepareGUI () {
             mainFrame = new JFrame("Java SWING Examples");
             mainFrame.setSize(WIDTH, HEIGHT);
             mainFrame.setLayout(new BorderLayout());
@@ -113,7 +135,7 @@ public class HtmlRead implements ActionListener {
             mainFrame.setVisible(true);
         }
 
-        private void showEventDemo() {
+        private void showEventDemo () {
 
             JButton enterButton = new JButton("Search");
 
@@ -127,10 +149,11 @@ public class HtmlRead implements ActionListener {
             controlPanel.add(enterButton);
 
             mainFrame.setVisible(true);
+
         }
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed (ActionEvent e){
             if (e.getSource() == cut)
                 t1.cut();
             if (e.getSource() == paste)
@@ -157,6 +180,7 @@ public class HtmlRead implements ActionListener {
             }
         }
     }
+
 
 
 //    ta = new JTextArea();
