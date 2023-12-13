@@ -44,6 +44,7 @@ public class HtmlRead implements ActionListener {
                     if (line.contains("href=")) {
                         if (line.contains("athletics")) {
                             int athletics = (line.indexOf("athletics"));
+                            String short1 = line.substring(althletics + 3);
                         int href = (line.indexOf("href="));
                         String short1 = line.substring(href + 6);
                         // System.out.println(short1);
