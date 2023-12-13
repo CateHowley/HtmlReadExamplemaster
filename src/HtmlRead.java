@@ -18,6 +18,11 @@ public class HtmlRead implements ActionListener {
     private JTextField t2;
     private int WIDTH = 800;
     private int HEIGHT = 700;
+    public String link= "https://www.milton.edu/";
+
+    public String Keyword = "soccer";
+
+    public JTextArea Results;
 
 
     public static void main(String[] args) {
@@ -30,52 +35,7 @@ public class HtmlRead implements ActionListener {
         prepareGUI();
 
 
-        try {
-            System.out.println();
-            System.out.print("hello \n");
-            URL url = new URL("https://www.milton.edu/");
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(url.openStream())
-            );
-            String line ;
 
-//
-                while ((line = reader.readLine()) != null) {
-                    if (line.contains("href=")) {
-                        if (line.contains("athletics")) {
-                            int athletics = (line.indexOf("athletics"));
-                            String short1 = line.substring(althletics + 3);
-                        int href = (line.indexOf("href="));
-                        String short1 = line.substring(href + 6);
-                        // System.out.println(short1);
-                        int milton = (short1.indexOf("\""));
-                        //String short2 =short1.substring( 0, milton);
-                        // System.out.println(short2);
-                        int cate = short1.indexOf("\'");
-                        //String short3 =short3.substring( 0, milton);
-
-
-                        if (milton < 0) {
-                            System.out.println(short1.substring(0, cate));
-                        } else if (cate < 0) {
-                            System.out.println(short1.substring(0, milton));
-
-                        } else if (cate < milton) {
-                            System.out.println(short1.substring(0, cate));
-                        } else {
-                            System.out.println(short1.substring(0, milton));
-                        }
-
-
-                    }
-
-                }
-                reader.close();
-
-            }
-        }catch(Exception ex){
-        System.out.println(ex);
-    }
     }
 
 
@@ -83,6 +43,9 @@ public class HtmlRead implements ActionListener {
             mainFrame = new JFrame("Java SWING Examples");
             mainFrame.setSize(WIDTH, HEIGHT);
             mainFrame.setLayout(new BorderLayout());
+
+            Results= new JTextArea();
+            Results.setSize(350, 100);
 
 //menu at top
             cut = new JMenuItem("cut");
@@ -120,8 +83,8 @@ public class HtmlRead implements ActionListener {
             mainFrame.setJMenuBar(mb); //set menu bar
 
 
-            statusLabel = new JLabel("hi", JLabel.CENTER);
-            statusLabel.setSize(350, 100);
+         //   statusLabel = new JLabel("hi", JLabel.CENTER);
+           // statusLabel.setSize(350, 100);
 
             mainFrame.addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent windowEvent) {
@@ -132,7 +95,8 @@ public class HtmlRead implements ActionListener {
             controlPanel.setLayout(new GridLayout()); //set the layout of the pannel
 
             mainFrame.add(controlPanel, BorderLayout.NORTH);
-            mainFrame.add(statusLabel);
+           // mainFrame.add(statusLabel);
+            mainFrame.add(Results);
             mainFrame.setVisible(true);
         }
 
@@ -168,8 +132,82 @@ public class HtmlRead implements ActionListener {
         private class ButtonClickListener implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 String command = e.getActionCommand();
-
+                System.out.println(t1.getText());
+                link=t1.getText();
                 if (command.equals("Search")) {
+
+                    try {
+                        System.out.print("hello \n");
+                        URL url = new URL(link);
+                      //  URL url = new URL("https://www.espn.com/");
+
+                        BufferedReader reader = new BufferedReader(
+                                new InputStreamReader(url.openStream())
+                        );
+                        String line ;
+
+//
+                        while ((line = reader.readLine()) != null) {
+                         //   System.out.println(line);
+                            if (line.contains("href=")) {
+                               // System.out.println(line);
+                                if (line.contains(Keyword)) {
+                                    int athletics = (line.indexOf("athletics"));
+                                    int href = (line.indexOf("href="));
+                                    String short1 = line.substring(href + 6);
+                                    // System.out.println(short1);
+                                    int milton = (short1.indexOf("\""));
+                                    //String short2 =short1.substring( 0, milton);
+                                    // System.out.println(short2);
+                                    int cate = short1.indexOf("\'");
+                                    //String short3 =short3.substring( 0, milton);
+
+
+                                    if (milton < 0) {
+                                        if(line.contains(Keyword)) {
+                                            System.out.println(short1.substring(0, cate));
+                                            Results.append(short1.substring(0, cate));
+                                            Results.append("\n");
+                                        }
+                                    } else if (cate < 0) {
+                                        if(line.contains(Keyword)) {
+
+                                            System.out.println(short1.substring(0, milton));
+                                            Results.append(short1.substring(0, milton));
+                                            Results.append("\n");
+
+                                        }
+
+                                    } else if (cate < milton) {
+                                        if(line.contains(Keyword)) {
+
+                                            System.out.println(short1.substring(0, cate));
+                                            Results.append(short1.substring(0, cate));
+                                            Results.append("\n");
+
+                                        }
+                                    } else {
+                                        if(line.contains(Keyword)) {
+
+                                            System.out.println(short1.substring(0, milton));
+                                            Results.append(short1.substring(0, milton));
+                                            Results.append("\n");
+
+                                        }
+                                    }
+
+
+
+                                }
+
+                            }
+
+
+                        }
+                        reader.close();
+                    }catch(Exception ex){
+                        System.out.println(ex);
+                    }
                     statusLabel.setText("Results");
                 } else if (command.equals("Submit")) {
                     statusLabel.setText("Submit Button clicked.");
