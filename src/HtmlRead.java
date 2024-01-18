@@ -15,6 +15,7 @@ public class HtmlRead implements ActionListener {
     private JMenu file, edit, help, back;
     private JMenuItem cut, copy, paste, selectAll;
     private JTextField t1;
+    private JScrollPane scroll;
     private JTextField t2;
     private int WIDTH = 800;
     private int HEIGHT = 700;
@@ -45,7 +46,8 @@ public class HtmlRead implements ActionListener {
             mainFrame.setLayout(new BorderLayout());
 
             Results= new JTextArea();
-            Results.setSize(350, 100);
+//            Results.setSize(350, 100);
+            scroll= new JScrollPane(Results,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); //,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
 
 //menu at top
             cut = new JMenuItem("cut");
@@ -96,7 +98,8 @@ public class HtmlRead implements ActionListener {
 
             mainFrame.add(controlPanel, BorderLayout.NORTH);
            // mainFrame.add(statusLabel);
-            mainFrame.add(Results);
+            mainFrame.add(scroll, BorderLayout.CENTER);
+//            mainFrame.add(Results);
             mainFrame.setVisible(true);
         }
 
@@ -132,12 +135,13 @@ public class HtmlRead implements ActionListener {
         private class ButtonClickListener implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 String command = e.getActionCommand();
-                System.out.println(t1.getText());
+//                System.out.println(t1.getText());
                 link=t1.getText();
+                Keyword=t2.getText();
                 if (command.equals("Search")) {
 
                     try {
-                        System.out.print("hello \n");
+                        //System.out.print("hello \n");
                         URL url = new URL(link);
                       //  URL url = new URL("https://www.espn.com/");
 
@@ -208,7 +212,6 @@ public class HtmlRead implements ActionListener {
                     }catch(Exception ex){
                         System.out.println(ex);
                     }
-                    statusLabel.setText("Results");
                 } else if (command.equals("Submit")) {
                     statusLabel.setText("Submit Button clicked.");
                 } else if (command.equals("Dance")) {
